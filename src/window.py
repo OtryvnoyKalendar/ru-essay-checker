@@ -1,5 +1,4 @@
 from tkinter import *
-# sudo apt-get install python3-tk
 from tkinter import ttk
 from tkinter import filedialog
 import sys
