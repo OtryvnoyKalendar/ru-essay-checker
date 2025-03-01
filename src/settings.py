@@ -8,9 +8,9 @@ languages = ["English", "Russian", "Spanish", "German", "Japanese", "French", "P
              "Italian"]
 
 
-def change_settings(table: dict[str]) -> bool:
-    for i in table:
-        print(i)
+def change_settings(params: dict[str, str]) -> bool:
+    for i in params.values():
+        print(i.get())
 
 
 def get_settings():

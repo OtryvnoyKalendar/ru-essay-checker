@@ -1,3 +1,4 @@
+import tkinter
 from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
@@ -16,6 +17,15 @@ class Window(object):
     height = 800
     root = Tk()
 
+    ai_model = tkinter.StringVar()
+    promt_file = tkinter.StringVar()
+    interface_language = tkinter.StringVar()
+    params = {
+        "ai_model": ai_model,
+        "promt_file": promt_file,
+        "interface_language": interface_language
+    }
+
     def get_window(self):
         return self.root
 
@@ -29,8 +39,12 @@ class Window(object):
         messagebox.showwarning(message=message)
 
     def select_promt_file(self):
-        file_path = filedialog.askopenfilename(filetypes=[("Text Files", "*.txt")],
-                                               initialdir=get_lower_directory_path("promts"))
+        self.promt_file.set(filedialog.askopenfilename(
+            filetypes=[("Text Files", "*.txt")],
+            initialdir=get_lower_directory_path("promts")
+        ))
+
+        file_path = self.promt_file.get()
         if file_path:
             file_path = os.path.basename(file_path)
             if file_path.endswith(".txt"):
@@ -73,7 +87,12 @@ class Window(object):
         lab_ai_models = Label(ifr_ai_model, text=t_ask_select_ai_model)
         lab_ai_models.pack(**label_pack_params)
 
-        cbx_ai_model = ttk.Combobox(ifr_ai_model, values=settings.ai_models, state="readonly")
+        cbx_ai_model = ttk.Combobox(
+            ifr_ai_model,
+            textvariable=self.ai_model,
+            values=settings.ai_models,
+            state="readonly"
+        )
         cbx_ai_model.pack(**widget_pack_params)
 
         leb_choose_promt_file = Label(ifr_ai_model, text=t_choose_promt_file)
@@ -108,6 +127,7 @@ class Window(object):
 
         cbx_language = ttk.Combobox(
             ifr_other,
+            textvariable=self.interface_language,
             values=settings.languages,
             state="readonly"
         )
@@ -121,15 +141,10 @@ class Window(object):
         btn_docks.pack(**widget_pack_params)
 
         # сохраняет заданные настройки
-        params = {
-            "ai_model": cbx_ai_model,
-            "promt_file": btn_choose_promt_file,
-            "interface_language": cbx_language
-        }
         btn_save = Button(
             ofr_settings,
             text=t_btn_save_settings,
-            command=lambda: settings.change_settings()
+            command=lambda: settings.change_settings(self.params)
         )
         btn_save.pack(**inner_frame_pack_params)
 
@@ -194,6 +209,10 @@ class Window(object):
         else:
             icon = PhotoImage(file=f"{get_lower_directory_path("icons")}icon.png")
             self.root.iconphoto(False, icon)
+
+    def cbx_selected(self, event):
+        """Изменяет значение params[key] когда выбран один из combobox`ов"""
+        self.params
 
     def set_mappings(self):
         self.root.bind('<Escape>', self.close)
