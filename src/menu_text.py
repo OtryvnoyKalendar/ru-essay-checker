@@ -1,4 +1,3 @@
-
 t_selected_file="Выбранный файл: "
 t_choose_promt_file="Выбирете файл промта:"
 t_search_in_filesystem="Найти в файловой системе"
