@@ -1,9 +1,15 @@
 from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
+from tkinter import messagebox
+from tkinter import scrolledtext
 import sys
+import webbrowser
 
+from dirpaths import *
 from menutext import *
+from loadconf import Settings
+
 
 class Window(object):
     name = "ru-essay-checker"
@@ -11,15 +17,26 @@ class Window(object):
     height = 800
     root = Tk()
 
-    def select_file(self):
-        file_path = filedialog.askopenfilename()
+    @staticmethod
+    def open_repo_docks():
+        url = "https://github.com/OtryvnoyKalendar/ru-essay-checker/blob/main/docks/README.md"
+        webbrowser.open(url)
+
+    @staticmethod
+    def show_warning(message):
+        messagebox.showwarning(message=message)
+
+    def select_promt_file(self):
+        file_path = filedialog.askopenfilename(filetypes=[("Text Files", "*.txt")],
+                                               initialdir=get_lower_directory_path("promts"))
         if file_path:
+            file_path = os.path.basename(file_path)
             if file_path.endswith(".txt"):
-                print(t_selected_file, file_path)
+                Window.show_warning(t_selected_file+file_path)
             else:
-                print(t_err_path_notxt)
+                Window.show_warning(t_err_path_notxt)
         else:
-            print(t_err_path_noselect)
+            Window.show_warning(t_err_path_noselect)
 
     def set_widgets(self, ofr_requests, ofr_settings):
         inner_frame_init_params={"width":300, "height":200, "borderwidth":2, "relief":"ridge"}
@@ -47,25 +64,20 @@ class Window(object):
         lab_ai_models = Label(ifr_ai_model, text=t_ask_select_ai_model)
         lab_ai_models.pack(**label_pack_params)
 
-        ai_models = ["Mistral", "GigaChat", "Perplexity"]
-        cbx_ai_model = ttk.Combobox(ifr_ai_model, values=ai_models)
+        cbx_ai_model = ttk.Combobox(ifr_ai_model, values=Settings.ai_models, state="readonly")
         cbx_ai_model.pack(**widget_pack_params)
 
-        btn_choose_promt_file = Button(ifr_ai_model, text=t_choose_promt_file, command=self.select_file)
+        leb_choose_promt_file = Label(ifr_ai_model, text=t_choose_promt_file)
+        leb_choose_promt_file.pack(**label_pack_params)
+
+        btn_choose_promt_file = Button(ifr_ai_model, text=t_search_in_filesystem, command=self.select_promt_file)
         btn_choose_promt_file.pack(**widget_pack_params)
 
-
-        ifr_api = Frame(ofr_settings, **inner_frame_init_params)
-        ifr_api.pack(**inner_frame_pack_params)
-
-        leb_entry_api_key = Label(ifr_api, text=t_ask_entry_api_key)
+        leb_entry_api_key = Label(ifr_ai_model, text=t_ask_entry_api_key)
         leb_entry_api_key.pack(**label_pack_params)
 
-        ent_api_key = ttk.Entry(ifr_api)
-        ent_api_key.pack(**widget_pack_params)
-        
-        btn_save = Button(ifr_api, text=t_save_api_key)
-        btn_save.pack(**widget_pack_params)
+        ent_api_key = ttk.Entry(ifr_ai_model)
+        ent_api_key.pack(**widget_pack_params, fill=X)
 
 
         ifr_other = Frame(ofr_settings, **inner_frame_init_params)
@@ -74,12 +86,14 @@ class Window(object):
         leb_select_language = Label(ifr_other , text=t_ask_select_language)
         leb_select_language.pack(**label_pack_params)
 
-        languages = ["English", "Russian", "Spanish", "German", "Japanese", "French", "Portuguese", "Italian"]
-        cbx_language = ttk.Combobox(ifr_other, values=languages)
+        cbx_language = ttk.Combobox(ifr_other, values=Settings.languages, state="readonly")
         cbx_language.pack(**widget_pack_params)
 
-        btn_docs = Button(ifr_other, text=t_read_docs)
-        btn_docs.pack(**widget_pack_params)
+        btn_docks = Button(ifr_other, text=t_read_docks, command=Window.open_repo_docks)
+        btn_docks.pack(**widget_pack_params)
+
+        btn_save = Button(ofr_settings, text=t_btn_save_settings, command=lambda: Settings.save())
+        btn_save.pack(**inner_frame_pack_params)
 
         # requests
 
@@ -88,8 +102,8 @@ class Window(object):
 
         leb_entry_source_text = Label(ifr_source_text, text=t_ask_entry_source_text)
         leb_entry_source_text.pack(**label_pack_params)
-
-        edt_source_text = Text(ifr_source_text, **text_init_params)
+        
+        edt_source_text = scrolledtext.ScrolledText(ifr_source_text, **text_init_params)
         edt_source_text.pack(**widget_pack_params)
 
 
@@ -99,7 +113,7 @@ class Window(object):
         leb_entry_essay_text = Label(ifr_ask_ai, text=t_ask_entry_essay_text)
         leb_entry_essay_text.pack(**label_pack_params)
         
-        edt_essay_text = Text(ifr_ask_ai, **text_init_params)
+        edt_essay_text = scrolledtext.ScrolledText(ifr_ask_ai, **text_init_params)
         edt_essay_text.pack(**widget_pack_params)
 
         btn_ask_ai = Button(ifr_ask_ai, text=t_btn_ai_question)
@@ -112,7 +126,7 @@ class Window(object):
         leb_ai_answer = Label(ifr_ai_answer, text=t_ai_answer)
         leb_ai_answer.pack(**label_pack_params)
         
-        edt_ai_answer = Text(ifr_ai_answer, **text_init_params)
+        edt_ai_answer = scrolledtext.ScrolledText(ifr_ai_answer, **text_init_params)
         edt_ai_answer.pack(**widget_pack_params)
 
     def set_frames(self):
@@ -140,9 +154,9 @@ class Window(object):
         self.root.minsize(self.width//2, self.height//2)
 
         if sys.platform == 'win32':
-            self.root.iconbitmap(default="icon.ico")
+            self.root.iconbitmap(default=f"{get_lower_directory_path("icons")}icon.ico")
         else:
-            icon = PhotoImage(file = "icon.png")
+            icon = PhotoImage(file = f"{get_lower_directory_path("icons")}icon.png")
             self.root.iconphoto(False, icon)
 
     def set_mappings(self):
@@ -152,7 +166,6 @@ class Window(object):
         self.set_window()
         self.set_mappings()
         self.set_frames()
-        # self.set_buttons()
 
     def close(self, event=None):
         self.root.destroy()
