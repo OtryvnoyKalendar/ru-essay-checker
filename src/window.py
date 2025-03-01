@@ -44,15 +44,20 @@ class Window(object):
             initialdir=get_lower_directory_path("promts")
         ))
 
+        self.promt_file.set(os.path.basename(self.promt_file.get()))
         file_path = self.promt_file.get()
         if file_path:
-            file_path = os.path.basename(file_path)
             if file_path.endswith(".txt"):
                 Window.show_warning(t_selected_file + file_path)
             else:
                 Window.show_warning(t_err_path_notxt)
         else:
             Window.show_warning(t_err_path_noselect)
+    
+    def set_compboxes(self, cbx_ai_model, cbx_language):
+        current_params=settings.get_settings()
+        cbx_language.set(current_params["interface_language"])
+        cbx_ai_model.set(current_params["ai_model"])
 
     def set_widgets(self, ofr_requests, ofr_settings):
         """Расстановка всех виджетов в окне"""
@@ -179,6 +184,8 @@ class Window(object):
 
         edt_ai_answer = scrolledtext.ScrolledText(ifr_ai_answer, **text_init_params)
         edt_ai_answer.pack(**widget_pack_params)
+
+        self.set_compboxes(cbx_ai_model, cbx_language)
 
     def set_frames(self):
         outer_frame_init_params = {"width": 400, "height": 400}
