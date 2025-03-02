@@ -6,7 +6,7 @@ from tkinter import messagebox
 from tkinter import scrolledtext
 import webbrowser
 
-from dirpaths import *
+from dir_path import *
 from menu_text import *
 import settings
 
@@ -48,11 +48,11 @@ class Window(object):
         file_path = self.promt_file.get()
         if file_path:
             if file_path.endswith(".txt"):
-                Window.show_warning(t_selected_file + file_path)
+                Window.show_warning(get_tr()["selected_file"] + file_path)
             else:
-                Window.show_warning(t_err_path_notxt)
+                Window.show_warning(get_tr()["err_path_notxt"])
         else:
-            Window.show_warning(t_err_path_noselect)
+            Window.show_warning(get_tr()["err_path_noselect"])
     
     def set_compboxes(self, cbx_ai_model, cbx_language):
         current_params=settings.get_settings()
@@ -89,7 +89,7 @@ class Window(object):
         ifr_ai_model = Frame(ofr_settings, **inner_frame_init_params)
         ifr_ai_model.pack(**inner_frame_pack_params)
 
-        lab_ai_models = Label(ifr_ai_model, text=t_ask_select_ai_model)
+        lab_ai_models = Label(ifr_ai_model, text=get_tr()["ask_select_ai_model"])
         lab_ai_models.pack(**label_pack_params)
 
         cbx_ai_model = ttk.Combobox(
@@ -100,16 +100,16 @@ class Window(object):
         )
         cbx_ai_model.pack(**widget_pack_params)
 
-        leb_choose_promt_file = Label(ifr_ai_model, text=t_choose_promt_file)
+        leb_choose_promt_file = Label(ifr_ai_model, text=get_tr()["choose_promt_file"])
         leb_choose_promt_file.pack(**label_pack_params)
 
-        btn_choose_promt_file = Button(ifr_ai_model, text=t_search_in_filesystem,
+        btn_choose_promt_file = Button(ifr_ai_model, text=get_tr()["search_in_filesystem"],
                                        command=self.select_promt_file)
         btn_choose_promt_file.pack(**widget_pack_params)
 
         leb_entry_api_key = Label(
             ifr_ai_model,
-            text=t_ask_entry_api_key
+            text=get_tr()["ask_entry_api_key"]
         )
         leb_entry_api_key.pack(**label_pack_params)
 
@@ -126,7 +126,7 @@ class Window(object):
 
         leb_select_language = Label(
             ifr_other,
-            text=t_ask_select_language
+            text=get_tr()["ask_select_language"]
         )
         leb_select_language.pack(**label_pack_params)
 
@@ -140,7 +140,7 @@ class Window(object):
 
         btn_docks = Button(
             ifr_other,
-            text=t_read_docks,
+            text=get_tr()["read_docks"],
             command=Window.open_repo_docks
         )
         btn_docks.pack(**widget_pack_params)
@@ -148,7 +148,7 @@ class Window(object):
         # сохраняет заданные настройки
         btn_save = Button(
             ofr_settings,
-            text=t_btn_save_settings,
+            text=get_tr()["btn_save_settings"],
             command=lambda: settings.change_settings(self.params)
         )
         btn_save.pack(**inner_frame_pack_params)
@@ -158,7 +158,7 @@ class Window(object):
         ifr_source_text = Frame(ofr_requests, **inner_frame_init_params)
         ifr_source_text.pack(**inner_frame_pack_params)
 
-        leb_entry_source_text = Label(ifr_source_text, text=t_ask_entry_source_text)
+        leb_entry_source_text = Label(ifr_source_text, text=get_tr()["ask_entry_source_text"])
         leb_entry_source_text.pack(**label_pack_params)
 
         edt_source_text = scrolledtext.ScrolledText(ifr_source_text, **text_init_params)
@@ -167,19 +167,19 @@ class Window(object):
         ifr_ask_ai = Frame(ofr_requests, **inner_frame_init_params)
         ifr_ask_ai.pack(**inner_frame_pack_params)
 
-        leb_entry_essay_text = Label(ifr_ask_ai, text=t_ask_entry_essay_text)
+        leb_entry_essay_text = Label(ifr_ask_ai, text=get_tr()["ask_entry_essay_text"])
         leb_entry_essay_text.pack(**label_pack_params)
 
         edt_essay_text = scrolledtext.ScrolledText(ifr_ask_ai, **text_init_params)
         edt_essay_text.pack(**widget_pack_params)
 
-        btn_ask_ai = Button(ifr_ask_ai, text=t_btn_ai_question)
+        btn_ask_ai = Button(ifr_ask_ai, text=get_tr()["btn_ai_question"])
         btn_ask_ai.pack(**widget_pack_params)
 
         ifr_ai_answer = Frame(ofr_requests, **inner_frame_init_params)
         ifr_ai_answer.pack(**inner_frame_pack_params)
 
-        leb_ai_answer = Label(ifr_ai_answer, text=t_ai_answer)
+        leb_ai_answer = Label(ifr_ai_answer, text=get_tr()["ai_answer"])
         leb_ai_answer.pack(**label_pack_params)
 
         edt_ai_answer = scrolledtext.ScrolledText(ifr_ai_answer, **text_init_params)
@@ -202,8 +202,8 @@ class Window(object):
 
         self.set_widgets(ofr_requests, ofr_settings)
 
-        notebook.add(ofr_settings, text=t_ofr_settings)
-        notebook.add(ofr_requests, text=t_ofr_requests)
+        notebook.add(ofr_settings, text=get_tr()["ofr_settings"])
+        notebook.add(ofr_requests, text=get_tr()["ofr_requests"])
 
     def set_window(self):
         self.root.title(self.name)

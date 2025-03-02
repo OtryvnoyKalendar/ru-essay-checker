@@ -1,22 +1,18 @@
-t_selected_file="Выбранный файл: "
-t_choose_promt_file="Выбирете файл промта:"
-t_search_in_filesystem="Найти в файловой системе"
-t_read_docks="Читать документацию на GitHub"
-t_ai_answer="Ответ нейросети:"
+import pandas as pd
 
-t_ofr_settings="Настройки"
-t_ofr_requests="Запросы"
+import settings
+from dir_path import get_lower_directory_path
 
-t_err_path_noselect="Путь до файла не выбран"
-t_err_path_notxt="Файл должен быть формата txt"
+def get_tr():
+    return tr
 
-t_ask_select_ai_model="Выбирете нейросеть:"
-t_ask_entry_api_key="Введите api-ключ от вашего аккаунта:"
-t_ask_select_language="Выберите язык интерфейса:"
-t_ask_entry_source_text="Введите исходный текст, по которому пишется сочинение:"
-t_ask_entry_essay_text="Введите текст своего сочинения:"
+def _get_translate_from_file(language, table_name):
+    data_file = pd.read_excel(get_lower_directory_path("")+table_name)
+    translate_dictionary = data_file.set_index('Dictionary key')[language].to_dict()
+    return translate_dictionary
 
-t_btn_ai_question="Проверить сочинение"
-t_btn_save_settings="Сохранить настройки"
-t_settings_are_saved="Настройки были сохранены"
+def set_language():
+    tr=_get_translate_from_file(settings.get_settings()["interface_language"], "translation.xlsx")
+
+tr=_get_translate_from_file(settings.get_settings()["interface_language"], "translation.xlsx")
 

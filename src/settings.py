@@ -1,5 +1,4 @@
-from dirpaths import *
-from menu_text import *
+from dir_path import get_lower_directory_path
 
 import json
 
@@ -19,6 +18,8 @@ def change_settings(new_params: dict[str, str]):
         if len(value) > 0:
             params[key] = value
     write_settings_to_file()
+    import menu_text
+    menu_text.set_language()
 
 
 def get_settings():

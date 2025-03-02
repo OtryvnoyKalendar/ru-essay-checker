@@ -9,7 +9,11 @@
 В вашей системе должен быть установлен `python 3.9` и библиотека `tkinter`.  
 Установка на `Debian-based` дистрибутивах:  
 ```sh
-sudo apt-get install python3-tk
+sudo apt-get install python3-tk python-pandas python3-openpyxl
+```
+Установка на `Arch-based` дистрибутивах:  
+```sh
+sudo pacman -S python-pandas python-openpyxl
 ```
 
 ### Как пользоваться 
