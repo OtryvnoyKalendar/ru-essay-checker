@@ -1,5 +1,5 @@
 {
     "ai_model": "None",
-    "promt_file": "standard.txt",
+    "promt_file": "empty.txt",
     "interface_language": "English"
 }

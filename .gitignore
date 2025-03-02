@@ -4,6 +4,8 @@ __pycache__/
 *$py.class
 
 # Confidential information
+ai's response.md
+user's full question.md
 *.apikey
 
 # C extensions

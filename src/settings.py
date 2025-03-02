@@ -3,7 +3,7 @@ from apikey import save_apikey_to_file
 
 import json
 
-ai_models = ["None", "Mistral", "GigaChat", "Perplexity"]
+ai_models = ["None", "Mistral", "GigaChat", "DeepSeek", "Perplexity"]
 languages = ["English", "Russian", "Spanish", "German", "Japanese", "French", "Portuguese",
              "Italian"]
 

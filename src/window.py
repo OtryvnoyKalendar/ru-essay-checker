@@ -2,13 +2,14 @@ import tkinter
 from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
-from tkinter import messagebox
+from warning import show_warning
 from tkinter import scrolledtext
 import webbrowser
 
 from dir_path import *
 from menu_text import *
 import settings
+import ai_request
 
 
 class Window(object):
@@ -34,10 +35,6 @@ class Window(object):
         url = "https://github.com/OtryvnoyKalendar/ru-essay-checker/blob/main/docks/README.md"
         webbrowser.open(url)
 
-    @staticmethod
-    def show_warning(message):
-        messagebox.showwarning(message=message)
-
     def select_promt_file(self):
         self.promt_file.set(filedialog.askopenfilename(
             filetypes=[("Text Files", "*.txt")],
@@ -48,11 +45,11 @@ class Window(object):
         file_path = self.promt_file.get()
         if file_path:
             if file_path.endswith(".txt"):
-                Window.show_warning(get_tr()["selected_file"] + file_path)
+                show_warning(get_tr()["selected_file"] + file_path)
             else:
-                Window.show_warning(get_tr()["err_path_notxt"])
+                show_warning(get_tr()["err_path_notxt"])
         else:
-            Window.show_warning(get_tr()["err_path_noselect"])
+            show_warning(get_tr()["err_path_notselect"])
     
     def set_compboxes(self, cbx_ai_model, cbx_language):
         current_params=settings.get_settings()
@@ -173,8 +170,6 @@ class Window(object):
         edt_essay_text = scrolledtext.ScrolledText(ifr_ask_ai, **text_init_params)
         edt_essay_text.pack(**widget_pack_params)
 
-        btn_ask_ai = Button(ifr_ask_ai, text=get_tr()["btn_ai_question"])
-        btn_ask_ai.pack(**widget_pack_params)
 
         ifr_ai_answer = Frame(ofr_requests, **inner_frame_init_params)
         ifr_ai_answer.pack(**inner_frame_pack_params)
@@ -186,6 +181,14 @@ class Window(object):
         edt_ai_answer.pack(**widget_pack_params)
 
         self.set_compboxes(cbx_ai_model, cbx_language)
+
+        btn_ask_ai = Button(
+            ifr_ask_ai,
+            text=get_tr()["btn_ai_question"],
+            command=lambda: ai_request.get_ai_response(edt_source_text.get("1.0", END),
+                                                       edt_essay_text.get("1.0", END), edt_ai_answer)
+        )
+        btn_ask_ai.pack(**widget_pack_params)
 
     def set_frames(self):
         outer_frame_init_params = {"width": 400, "height": 400}

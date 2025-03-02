@@ -13,7 +13,17 @@ sudo apt-get install python3-tk python-pandas python3-openpyxl
 ```
 Установка на `Arch-based` дистрибутивах:  
 ```sh
-sudo pacman -S python-pandas python-openpyxl
+sudo pacman -S python-pandas python-openpyxl python-openai
+yay -S python-mistralai # можно поставить и другим способом
+```
+Установка с помощью `pip`:
+```sh
+pip install mistralai openai
+```
+Пакеты нейросетей можно поставить во всю систему сразу:
+```sh
+# если не уверены, что делаете, не рискуйте
+pip install --break-system-packages ai-package-name
 ```
 
 ### Как пользоваться 
