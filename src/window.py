@@ -149,7 +149,7 @@ class Window(object):
         btn_save = Button(
             ofr_settings,
             text=get_tr()["btn_save_settings"],
-            command=lambda: settings.change_settings(self.params)
+            command=lambda: settings.change_settings(self.params, ent_api_key.get())
         )
         btn_save.pack(**inner_frame_pack_params)
 

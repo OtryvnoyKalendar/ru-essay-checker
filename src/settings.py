@@ -1,4 +1,5 @@
 from dir_path import get_lower_directory_path
+from apikey import save_apikey_to_file
 
 import json
 
@@ -12,7 +13,7 @@ def write_settings_to_file():
         json.dump(params, file, ensure_ascii=False, indent=4)
 
 
-def change_settings(new_params: dict[str, str]):
+def change_settings(new_params: dict[str, str], apikey: str):
     for key, value in new_params.items():
         value = value.get()
         if len(value) > 0:
@@ -20,6 +21,11 @@ def change_settings(new_params: dict[str, str]):
     write_settings_to_file()
     import menu_text
     menu_text.set_language()
+    save_apikey_to_file(apikey)
+
+
+def get_ai_model() -> str:
+    return params["ai_model"]
 
 
 def get_settings():
