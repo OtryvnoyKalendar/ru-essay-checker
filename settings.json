@@ -1,5 +1,5 @@
 {
-    "ai_model": "Mistral",
+    "ai_model": "None",
     "promt_file": "standard.txt",
-    "interface_language": "Russian"
+    "interface_language": "English"
 }

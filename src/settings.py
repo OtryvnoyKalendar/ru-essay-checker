@@ -8,7 +8,7 @@ languages = ["English", "Russian", "Spanish", "German", "Japanese", "French", "P
 
 
 def write_settings_to_file():
-    with open('settings.json', 'w', encoding='utf-8') as file:
+    with open(get_lower_directory_path("")+'settings.json', 'w', encoding='utf-8') as file:
         json.dump(params, file, ensure_ascii=False, indent=4)
 
 
