@@ -51,10 +51,13 @@ class Window(object):
         else:
             show_warning(get_tr()["err_path_notselect"])
     
-    def set_compboxes(self, cbx_ai_model, cbx_language):
+    def change_by_downloaded_settings(self, cbx_ai_model, cbx_language, prg_settings_selected):
         current_params=settings.get_settings()
         cbx_language.set(current_params["interface_language"])
         cbx_ai_model.set(current_params["ai_model"])
+        
+        configured_res = settings.is_ai_configured(False)
+        prg_settings_selected["value"] = 100 - int(configured_res[1]/configured_res[2]*100)
 
     def set_widgets(self, ofr_requests, ofr_settings):
         """Расстановка всех виджетов в окне"""
@@ -70,18 +73,13 @@ class Window(object):
         ifr_select_progress = Frame(ofr_settings, **inner_frame_init_params)
         ifr_select_progress.pack(**inner_frame_pack_params)
 
-        settings_progress_val = IntVar()
-        pbr_settings_selected = ttk.Progressbar(
+        prg_settings_selected = ttk.Progressbar(
             ifr_select_progress,
             orient="horizontal",
             length=self.width // 3,
-            maximum=300,
-            variable=settings_progress_val
+            maximum=100,
         )
-        pbr_settings_selected.pack(**widget_pack_params)
-
-        lab_progress = ttk.Label(textvariable=settings_progress_val)
-        lab_progress.pack(**label_pack_params)
+        prg_settings_selected.pack(**widget_pack_params)
 
         ifr_ai_model = Frame(ofr_settings, **inner_frame_init_params)
         ifr_ai_model.pack(**inner_frame_pack_params)
@@ -146,7 +144,7 @@ class Window(object):
         btn_save = Button(
             ofr_settings,
             text=get_tr()["btn_save_settings"],
-            command=lambda: settings.change_settings(self.params, ent_api_key.get())
+            command=lambda: settings.change_settings(self.params, ent_api_key.get(), prg_settings_selected)
         )
         btn_save.pack(**inner_frame_pack_params)
 
@@ -180,7 +178,7 @@ class Window(object):
         edt_ai_answer = scrolledtext.ScrolledText(ifr_ai_answer, **text_init_params)
         edt_ai_answer.pack(**widget_pack_params)
 
-        self.set_compboxes(cbx_ai_model, cbx_language)
+        self.change_by_downloaded_settings(cbx_ai_model, cbx_language, prg_settings_selected)
 
         btn_ask_ai = Button(
             ifr_ask_ai,

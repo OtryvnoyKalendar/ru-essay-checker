@@ -8,6 +8,8 @@ ai's response.md
 user's full question.md
 *.apikey
 
+todo.txt
+
 # C extensions
 *.so
 
