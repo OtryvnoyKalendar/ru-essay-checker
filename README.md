@@ -18,11 +18,11 @@ yay -S python-mistralai # можно поставить и другим спос
 ```
 Установка с помощью `pip`:
 ```sh
-pip install mistralai openai
+pip install mistralai openai tkhtmlview markdown
 ```
 Пакеты нейросетей можно поставить во всю систему сразу:
 ```sh
-# если не уверены, что делаете, не рискуйте
+# Не рискуйте, если не уверены в том, что делаете
 pip install --break-system-packages ai-package-name
 ```
 

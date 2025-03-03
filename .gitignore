@@ -9,6 +9,7 @@ user's full question.md
 *.apikey
 
 todo.txt
+.~lock.translation.xlsx#
 
 # C extensions
 *.so

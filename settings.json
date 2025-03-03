@@ -1,5 +1,6 @@
 {
     "ai_model": "None",
     "promt_file": "empty.txt",
-    "interface_language": "English"
+    "interface_language": "English",
+    "view_format": "HTML"
 }
