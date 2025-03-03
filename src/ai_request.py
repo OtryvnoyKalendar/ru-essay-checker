@@ -69,7 +69,7 @@ def get_ai_response(source_text, essay_text, edt_ai_answer) -> bool:
         
         if not ai_module is None:
             show_temporary_warning(get_tr()["wait_ai_response"], 300)
-            # ai_module.write_response_to_file(api_key, user_input, output_filepath)
+            ai_module.write_response_to_file(api_key, user_input, output_filepath)
         else:
             show_warning(get_tr()["err_ai_currently_notsupport"])
             return False

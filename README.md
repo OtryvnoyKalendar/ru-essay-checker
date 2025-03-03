@@ -3,32 +3,61 @@
 <img src="https://github.com/OtryvnoyKalendar/ru-essay-checker/blob/main/screenshots/screenshot%201.png" height="350" >
 
 ### Общее описание
-ИИ-клиент, который проверяет сочинения `ЕГЭ`. Может быть использован для других целей. Для доступа вы должны получить свой api-ключ.
+ИИ-клиент, который проверяет сочинения `ЕГЭ`. Может быть использован для других целей. Для доступа вы должны получить свой api-ключ. В вашей системе должен быть установлен `python` не ниже `3.9`.
 
-### Зависимости
-В вашей системе должен быть установлен `python 3.9` и библиотека `tkinter`.  
+### Установка с помощью виртуальной среды
+Откройте консоль в папке с проектом  
+Действия на `Unix`:  
+```sh
+python -m venv checkerenv
+source checkerenv/bin/activate
+pip install -r requirements.txt
+pip install --upgrade
+python ./src/main.py
+```
+Действия на `Windows`:  
+```sh
+python -m venv checkerenv
+checkerenv\Scripts\activate
+pip install -r requirements.txt
+pip install --upgrade
+python src\main.py
+```
+Если какого-то модуля не хватает, то добавьте его имя в `requirements.txt` и заново используйте команду `pip install -r ...`
+Для повторного запуска:  
+`Unix`:  
+```sh
+source checkerenv/bin/activate
+python ./src/main.py
+```
+`Windows`:  
+```sh
+checkerenv\Scripts\activate
+python src\main.py
+```
+Чтобы выйти из виртуальной среды:  
+```sh
+deactivate
+```
+
+### Установка зависимостей в систему на Unix 
+Эти пакеты нейросетей можно поставить во всю систему сразу:
+```sh
+# Не рискуйте, если не уверены в том, что делаете
+pip install --break-system-packages mistralai gigachat
+```
 Установка на `Debian-based` дистрибутивах:  
 ```sh
-sudo apt-get install python3-tk python-pandas python3-openpyxl
+sudo apt update
+sudo apt-get install python3 python3-pip
+sudo apt-get install python3-tk python-pandas python3-openpyxl python3-mistralclient python3-openai python3-markdown
+# gigachat tkhtmlview - хз как установить в систему
 ```
 Установка на `Arch-based` дистрибутивах:  
 ```sh
-sudo pacman -S python-pandas python-openpyxl python-openai
-yay -S python-mistralai # можно поставить и другим способом
-```
-Установка с помощью `pip`:
-```sh
-pip install mistralai openai tkhtmlview markdown
-```
-Пакеты нейросетей можно поставить во всю систему сразу:
-```sh
-# Не рискуйте, если не уверены в том, что делаете
-pip install --break-system-packages ai-package-name
-```
-
-### Как пользоваться 
-Откройте терминал в `src` и выполните команду:  
-```sh
-python3 main.py
+sudo pacman -S python-pandas python-openpyxl python-openai python-markdown
+# gigachat tkhtmlview - хз как установить в систему
+# Этот пакет из неофициальных репозиториев
+yay -S python-mistralai
 ```
 

@@ -1,0 +1,7 @@
+mistralai
+openai
+tkhtmlview
+markdown
+pandas
+openpyxl
+gigachat
