@@ -5,6 +5,7 @@ from tkinter import filedialog
 from warning import show_warning
 from tkinter import scrolledtext
 import webbrowser
+import tkhtmlview
 
 from dir_path import *
 from menu_text import *
@@ -14,17 +15,19 @@ import ai_request
 
 class Window(object):
     name = "ru-essay-checker"
-    width = 1000
-    height = 800
+    width = 1200
+    height = 900
     root = Tk()
 
     ai_model = tkinter.StringVar()
     promt_file = tkinter.StringVar()
     interface_language = tkinter.StringVar()
+    view_format = tkinter.StringVar()
     params = {
         "ai_model": ai_model,
         "promt_file": promt_file,
-        "interface_language": interface_language
+        "interface_language": interface_language,
+        "view_format": view_format
     }
 
     def get_window(self):
@@ -34,6 +37,11 @@ class Window(object):
     def open_repo_docks():
         url = "https://github.com/OtryvnoyKalendar/ru-essay-checker/blob/main/docks/README.md"
         webbrowser.open(url)
+
+    def save_to_clipboard(self, text_to_copy):
+        self.root.clipboard_clear()
+        self.root.clipboard_append(text_to_copy)
+        self.root.update()
 
     def select_promt_file(self):
         self.promt_file.set(filedialog.askopenfilename(
@@ -51,10 +59,11 @@ class Window(object):
         else:
             show_warning(get_tr()["err_path_notselect"])
     
-    def change_by_downloaded_settings(self, cbx_ai_model, cbx_language, prg_settings_selected):
+    def change_by_downloaded_settings(self, cbx_ai_model, cbx_language, cbx_view_format, prg_settings_selected):
         current_params=settings.get_settings()
         cbx_language.set(current_params["interface_language"])
         cbx_ai_model.set(current_params["ai_model"])
+        cbx_view_format.set(current_params["view_format"])
         
         configured_res = settings.is_ai_configured(False)
         prg_settings_selected["value"] = 100 - int(configured_res[1]/configured_res[2]*100)
@@ -66,7 +75,7 @@ class Window(object):
         inner_frame_pack_params = {"anchor": NW, "padx": 20, "pady": 15, "fill": X}
         label_pack_params = {"anchor": NW, "padx": 10, "pady": 5}
         widget_pack_params = {"anchor": NW, "padx": 10, "pady": 8}
-        text_init_params = {"height": 7, "wrap": "word"}
+        text_init_params = {"height": 9, "wrap": "word"}
 
         # settings
 
@@ -97,6 +106,9 @@ class Window(object):
 
         leb_choose_promt_file = Label(ifr_ai_model, text=get_tr()["choose_promt_file"])
         leb_choose_promt_file.pack(**label_pack_params)
+
+        leb_selected_promt_file = Label(ifr_ai_model, text=settings.get_settings()["promt_file"])
+        leb_selected_promt_file.pack(**label_pack_params)
 
         btn_choose_promt_file = Button(ifr_ai_model, text=get_tr()["search_in_filesystem"],
                                        command=self.select_promt_file)
@@ -133,6 +145,20 @@ class Window(object):
         )
         cbx_language.pack(**widget_pack_params)
 
+        leb_select_view_format = Label(
+            ifr_other,
+            text=get_tr()["ask_select_format"]
+        )
+        leb_select_view_format.pack(**label_pack_params)
+
+        cbx_view_format = ttk.Combobox(
+            ifr_other,
+            textvariable=self.view_format,
+            values=settings.view_formats,
+            state="readonly"
+        )
+        cbx_view_format.pack(**widget_pack_params)
+
         btn_docks = Button(
             ifr_other,
             text=get_tr()["read_docks"],
@@ -144,7 +170,7 @@ class Window(object):
         btn_save = Button(
             ofr_settings,
             text=get_tr()["btn_save_settings"],
-            command=lambda: settings.change_settings(self.params, ent_api_key.get(), prg_settings_selected)
+            command=lambda: settings.change_settings(self.params, ent_api_key.get(), prg_settings_selected, leb_selected_promt_file)
         )
         btn_save.pack(**inner_frame_pack_params)
 
@@ -175,10 +201,17 @@ class Window(object):
         leb_ai_answer = Label(ifr_ai_answer, text=get_tr()["ai_answer"])
         leb_ai_answer.pack(**label_pack_params)
 
-        edt_ai_answer = scrolledtext.ScrolledText(ifr_ai_answer, **text_init_params)
+        edt_ai_answer = tkhtmlview.HTMLScrolledText(ifr_ai_answer, html="", **text_init_params)
         edt_ai_answer.pack(**widget_pack_params)
+        
+        btn_save_answer_to_clipboard = Button(
+            ifr_ai_answer,
+            text=get_tr()["save_to_clipboard"],
+            command=lambda: self.save_to_clipboard(ai_request.read_ais_response_from_file())
+        )
+        btn_save_answer_to_clipboard.pack(**widget_pack_params)
 
-        self.change_by_downloaded_settings(cbx_ai_model, cbx_language, prg_settings_selected)
+        self.change_by_downloaded_settings(cbx_ai_model, cbx_language, cbx_view_format, prg_settings_selected)
 
         btn_ask_ai = Button(
             ifr_ask_ai,

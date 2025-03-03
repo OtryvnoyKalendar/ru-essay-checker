@@ -11,14 +11,14 @@ from apikey import get_current_apikey_filepath
 ai_models = ["None", "Mistral", "GigaChat", "DeepSeek", "Perplexity"]
 languages = ["English", "Russian", "Spanish", "German", "Japanese", "French", "Portuguese",
              "Italian"]
-
+view_formats = ["Markdown", "HTML", "Console"]
 
 def write_settings_to_file():
     with open(get_lower_directory_path("")+'settings.json', 'w', encoding='utf-8') as file:
         json.dump(params, file, ensure_ascii=False, indent=4)
 
 
-def change_settings(new_params: dict[str, str], apikey: str, prg_settings_selected):
+def change_settings(new_params: dict[str, str], apikey: str, prg_settings_selected, leb_selected_promt_file):
     # ai settings
     for key, value in new_params.items():
         value = value.get()
@@ -34,6 +34,7 @@ def change_settings(new_params: dict[str, str], apikey: str, prg_settings_select
     # update gui
     configured_res = is_ai_configured(False)
     prg_settings_selected["value"] = 100 - int(configured_res[1]/configured_res[2]*100)
+    leb_selected_promt_file["text"] = params["promt_file"]
 
 
 def get_ai_model() -> str:
