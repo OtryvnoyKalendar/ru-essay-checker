@@ -48,12 +48,28 @@ pip install --break-system-packages mistralai gigachat
 ```
 Установка на `Debian-based` дистрибутивах:  
 ```sh
+sudo apt-get install build-essential checkinstall
+sudo apt-get install libreadline-dev libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev
 sudo apt update
+cd /usr/src
+sudo wget https://www.python.org/ftp/python/3.13.2/Python-3.13.2.tgz
+sudo tar xzf Python-3...
+cd Python-3...
+sudo ./configure
+sudo make altinstall
+python3.13 -V # проверка установился ли python
+```
+Системные пакеты: (у меня не работали)
+```sh
+sudo add-apt-repository ppa:deadsnakes/ppa
+sudo apt-get update
+sudo apt-get install python3.13
 sudo apt-get install python python3 python-is-python3 python3-pip
 sudo apt-get install python3.13-venv python3.13-tk
 sudo apt-get install python3-openpyxl python3-mistralclient python3-openai python3-markdown
 # gigachat tkhtmlview - хз как установить в систему
 ```
+   
 Установка на `Arch-based` дистрибутивах:  
 ```sh
 sudo pacman -S python-openpyxl python-openai python-markdown
