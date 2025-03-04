@@ -1,7 +1,6 @@
-mistralai
-openai
 tkhtmlview
 markdown
-pandas
 openpyxl
+mistralai
+openai
 gigachat

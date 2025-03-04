@@ -11,6 +11,7 @@ user's full question.md
 todo.txt
 checkerenv/
 .~lock.translation.xlsx#
+exp1.py
 
 # C extensions
 *.so

@@ -9,17 +9,16 @@ def write_response_to_file(api_key, user_input, output_filepath):
 
     try:
         chat_response = client.chat.complete(
-            model = model,
-            messages = [
+            model=model,
+            messages=[
                 {
                     "role": "user",
                     "content": user_input,
                 },
-            ]
+            ],
         )
 
-        with open(output_filepath, 'w', encoding="utf-8") as ouput_file:
+        with open(output_filepath, "w", encoding="utf-8") as ouput_file:
             print(chat_response.choices[0].message.content, end="", file=ouput_file)
     except Exception as e:
         show_warning(f"{e}")
-

@@ -3,7 +3,7 @@ from dir_path import get_lower_directory_path
 
 
 def get_current_apikey_filepath() -> str:
-    return get_lower_directory_path("apikeys")+settings.get_ai_model()+".apikey"
+    return get_lower_directory_path("apikeys") + settings.get_ai_model() + ".apikey"
 
 
 def save_apikey_to_file(key) -> bool:
@@ -17,4 +17,3 @@ def save_apikey_to_file(key) -> bool:
 def read_apikey_from_file() -> str:
     with open(get_current_apikey_filepath(), "r") as apikey_file:
         return apikey_file.readline()
-

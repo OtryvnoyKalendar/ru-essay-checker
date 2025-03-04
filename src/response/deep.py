@@ -13,11 +13,10 @@ def write_response_to_file(api_key, user_input, output_filepath):
                 {"role": "system", "content": "You are a helpful assistant"},
                 {"role": "user", "content": user_input},
             ],
-            stream=False
+            stream=False,
         )
 
-        with open(output_filepath, 'w', encoding="utf-8") as ouput_file:
+        with open(output_filepath, "w", encoding="utf-8") as ouput_file:
             print(response.choices[0].message.content, end="", file=ouput_file)
     except Exception as e:
         show_warning(f"{e}")
-
