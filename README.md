@@ -36,14 +36,21 @@ sudo pacman -S tk
 ```
 - На `Debian-based`:
 ```sh
-sudo apt install libtk-dev
+sudo apt install -y python3-tk
 ```
-4. Откройте консоль в папке с проектом
-5. Установка программы
+4. Скачайте проект
+```sh
+git clone https://github.com/OtryvnoyKalendar/ru-essay-checker.git
+```
+5. Перейдите в папку с проектом в консоли
+```sh
+cd ru-essay-checker
+```
+6. Установите программу
 ```sh
 uv sync
 ```
-6. Запуск программы
+7. Запуск программы (нужно находиться в папке с проектом)
 ```sh
 uv run rchecker
 ```
