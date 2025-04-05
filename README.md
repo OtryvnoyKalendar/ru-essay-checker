@@ -3,78 +3,47 @@
 <img src="https://github.com/OtryvnoyKalendar/ru-essay-checker/blob/main/screenshots/screenshot%201.png" height="350" >
 
 ### Общее описание
-ИИ-клиент, который проверяет сочинения `ЕГЭ`. Может быть использован для других целей. Для доступа вы должны получить свой api-ключ. В вашей системе должен быть установлен `python` не ниже `3.11`.
+ИИ-клиент, который проверяет сочинения `ЕГЭ`. Может быть использован для других целей. Для доступа вы должны получить свой api-ключ.
 
-### Установка с помощью виртуальной среды
-Откройте консоль в папке с проектом  
-Действия на `Unix`:  
+### Установка
+1. Установите и проверьте наличие `git`
 ```sh
-python -m venv checkerenv
-source checkerenv/bin/activate
-pip install -r requirements.txt
-pip install --upgrade pip
-python ./src/main.py
+git --version
 ```
-Действия на `Windows`:  
+2. Установите и проверьте наличие `uv`
 ```sh
-python -m venv checkerenv
-checkerenv\Scripts\activate
-pip install -r requirements.txt
-pip install --upgrade pip
-python src\main.py
+uv --version
 ```
-Если какого-то модуля не хватает, то добавьте его имя в `requirements.txt` и заново используйте команду `pip install -r ...`  
-Для повторного запуска:  
-`Unix`:  
+- Установка на `Unix`:
 ```sh
-source checkerenv/bin/activate
-python ./src/main.py
+curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
-`Windows`:  
+- Установка на `Windows`:
+Используйте `irm` для загрузки скрипта и выполнения его с помощью `iex`:
 ```sh
-checkerenv\Scripts\activate
-python src\main.py
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
 ```
-Чтобы выйти из виртуальной среды:  
+Изменение политики выполнения позволяет запускать скрипт из Интернета.
+Запросите конкретную версию, указав ее в URL-адресе:
 ```sh
-deactivate
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/0.6.12/install.ps1 | iex"
 ```
-
-### Установка зависимостей в систему на Linux 
-Эти пакеты нейросетей можно поставить во всю систему сразу:
+3. Установите библиотеку tk, если требуется
+На некоторых linux дистрибутивах она не входит в пакет вместе с python
+На `Arch-based`:
 ```sh
-# Не рискуйте, если не уверены в том, что делаете
-pip install --break-system-packages mistralai gigachat
+sudo pacman -S tk
 ```
-Установка на `Debian-based` дистрибутивах:  
+На `Debian-based`:
 ```sh
-sudo apt-get install build-essential checkinstall
-sudo apt-get install libreadline-dev libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev
-sudo apt update
-cd /usr/src
-sudo wget https://www.python.org/ftp/python/3.13.2/Python-3.13.2.tgz
-sudo tar xzf Python-3...
-cd Python-3...
-sudo ./configure
-sudo make altinstall
-python3.13 -V # проверка установился ли python
+sudo apt install libtk-dev
 ```
-Системные пакеты: (у меня не работали)
+4. Откройте консоль в папке с проектом
+5. Установка программы
 ```sh
-sudo add-apt-repository ppa:deadsnakes/ppa
-sudo apt-get update
-sudo apt-get install python3.13
-sudo apt-get install python python3 python-is-python3 python3-pip
-sudo apt-get install python3.13-venv python3.13-tk
-sudo apt-get install python3-openpyxl python3-mistralclient python3-openai python3-markdown
-# gigachat tkhtmlview - хз как установить в систему
+uv sync
 ```
-   
-Установка на `Arch-based` дистрибутивах:  
+6. Запуск программы (этот раздел не доработан)
 ```sh
-sudo pacman -S python-openpyxl python-openai python-markdown
-# gigachat tkhtmlview - хз как установить в систему
-# Этот пакет из неофициальных репозиториев
-yay -S python-mistralai
+uv run rchecker
 ```
-

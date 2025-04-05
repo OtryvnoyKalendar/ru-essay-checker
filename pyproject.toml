@@ -1,0 +1,24 @@
+[project]
+name = "ru-essay-checker"
+version = "0.1.0"
+description = "An AI client who checks essays"
+readme = "README.md"
+requires-python = ">=3.13.0"
+dependencies = [
+    "gigachat>=0.1.39.post1",
+    "markdown>=3.7",
+    "mistralai>=1.6.0",
+    "openai>=1.70.0",
+    "openpyxl>=3.1.5",
+    "tkhtmlview>=0.3.1",
+]
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.uv]
+package = true
+
+[project.scripts]
+rchecker = "main:start"

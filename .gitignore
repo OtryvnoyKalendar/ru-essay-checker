@@ -9,6 +9,7 @@ user's full question.md
 *.apikey
 
 todo.txt
+uv.lock
 checkerenv/
 .~lock.translation.xlsx#
 exp1.py
