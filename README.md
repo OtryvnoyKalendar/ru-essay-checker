@@ -43,7 +43,7 @@ sudo apt install libtk-dev
 ```sh
 uv sync
 ```
-6. Запуск программы (этот раздел не доработан)
+6. Запуск программы
 ```sh
 uv run rchecker
 ```
