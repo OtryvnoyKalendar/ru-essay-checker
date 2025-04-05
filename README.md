@@ -28,7 +28,7 @@ powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | ie
 ```sh
 powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/0.6.12/install.ps1 | iex"
 ```
-3. Установите библиотеку tk, если требуется
+3. Установите библиотеку tk, если требуется  
 На некоторых linux дистрибутивах она не входит в пакет вместе с python  
 - На `Arch-based`:
 ```sh
