@@ -1,6 +1,6 @@
 # ru-essay-checker
 
-<img src="https://github.com/OtryvnoyKalendar/ru-essay-checker/blob/main/screenshots/screenshot%201.png" height="350" >
+![Screenshot](screenshots/screenshot-1.png)
 
 ### Общее описание
 ИИ-клиент, который проверяет сочинения `ЕГЭ`. Может быть использован для других целей. Для доступа вы должны получить свой api-ключ.
@@ -54,3 +54,6 @@ uv sync
 ```sh
 uv run rchecker
 ```
+
+### Использование
+Файлы промтов нужно самостоятельно добавлять в папку `promts` в `.txt` формате. Если у вас возникают ошибки с файлом промта, убедитесь, что он сохранён в кодировке `utf-8`.
